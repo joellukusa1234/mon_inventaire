@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reçu | NexGen 2026</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+        /* Style pour l'écran (Glassmorphism) */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .receipt-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 16px;
+            padding: 40px;
+            width: 350px;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+        }
+
+        .header h2 { margin: 0; font-weight: 600; letter-spacing: 2px;}
+        
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .label { color: #a1c4fd; font-size: 0.9em; }
+        
+        .total-row {
+            border-top: 1px dashed rgba(255, 255, 255, 0.3);
+            padding-top: 15px;
+            margin-top: 20px;
+            font-weight: 600;
+            font-size: 1.3em;
+        }
+
+        .actions {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+
+        .btn-print {
+            background: #ffffff;
+            color: #0f2027;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn-print:hover { background: #a1c4fd; }
+
+        .link-back {
+            color: #a1c4fd;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s;
+        }
+        .link-back:hover { color: #ffffff; }
+
+        /* Style spécifiquement pour l'imprimante (Noir et Blanc propre) */
+        @media print {
+            body {
+                background: white;
+                color: black;
+                display: block;
+                padding: 20px;
+            }
+            .receipt-card {
+                background: none;
+                backdrop-filter: none;
+                border: none;
+                box-shadow: none;
+                width: 100%;
+                padding: 0;
+            }
+            .header { border-bottom: 2px solid black; }
+            .total-row { border-top: 2px dashed black; }
+            .label { color: #555; }
+            .actions { display: none; /* Cache les boutons à l'impression */ }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="receipt-card">
+        <div class="header">
+            <h2>REÇU OFFICIEL</h2>
+        </div>
+        
+        <div class="row">
+            <span class="label">Date :</span>
+            <span>{{ vente.date_vente|date:"d/m/Y H:i" }}</span>
+        </div>
+        
+        <div class="row">
+            <span class="label">Article :</span>
+            <span>{{ vente.article.nom }}</span>
+        </div>
+        
+        <div class="row total-row">
+            <span>Total Payé</span>
+            <span>{{ vente.total }} $</span>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button class="btn-print" onclick="window.print()">🖨 Imprimer le reçu</button>
+        <a href="{% url 'liste_articles' %}" class="link-back">← Retour à l'inventaire</a>
+    </div>
+
+</body>
+</html>
