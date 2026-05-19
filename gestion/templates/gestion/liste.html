@@ -4,123 +4,248 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventaire | NexGen 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #0f172a;
+            --accent-green: #10b981;
+            --border-color: #e2e8f0;
+            --radius: 12px;
+        }
 
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            color: #ffffff;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
 
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-            border-radius: 24px;
-            padding: 40px;
-            width: 90%;
+        .dashboard-container {
+            width: 100%;
             max-width: 1000px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
         h1 {
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin-bottom: 30px;
-            text-align: center;
-            background: -webkit-linear-gradient(#fff, #a1c4fd);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 32px;
+            text-align: left;
+            position: relative;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h1::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
         }
 
         table {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            padding: 15px 20px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-collapse: separate;
+            border-spacing: 0 12px; /* Crée l'espace nécessaire pour l'effet de contour individuel */
+            margin-top: -12px;
         }
 
         th {
+            font-size: 13px;
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 0.85em;
-            letter-spacing: 1.5px;
-            color: #a1c4fd;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            padding: 16px 24px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        tr:hover {
-            background: rgba(255, 255, 255, 0.03);
-            transition: all 0.3s ease;
+        th:last-child {
+            text-align: right;
+        }
+
+        tbody tr {
+            background: #ffffff;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        /* L'effet d'encerclé noir dynamique demandé */
+        tbody tr td {
+            padding: 18px 24px;
+            font-size: 15px;
+            font-weight: 500;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.25s ease;
+        }
+
+        tbody tr td:first-child {
+            border-left: 1px solid var(--border-color);
+            border-top-left-radius: var(--radius);
+            border-bottom-left-radius: var(--radius);
+        }
+
+        tbody tr td:last-child {
+            border-right: 1px solid var(--border-color);
+            border-top-right-radius: var(--radius);
+            border-bottom-right-radius: var(--radius);
+            text-align: right;
+        }
+
+        /* Animation au survol de la ligne (Encerclé noir qui bouge) */
+        tbody tr:hover td {
+            border-color: #000000 !important;
+            color: #000000;
+        }
+        
+        tbody tr:hover td:first-child {
+            border-left: 2px solid #000000 !important;
+        }
+        
+        tbody tr:hover td:last-child {
+            border-right: 2px solid #000000 !important;
+        }
+
+        tbody tr:hover td {
+            border-top: 2px solid #000000 !important;
+            border-bottom: 2px solid #000000 !important;
+        }
+
+        .article-name {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .price-tag {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .stock-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            background-color: #f1f5f9;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        tbody tr:hover .stock-badge {
+            background-color: #000000;
+            color: #ffffff;
+            border-color: #000000;
         }
 
         .btn-vendre {
-            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary);
+            color: #ffffff;
             border: none;
             padding: 10px 20px;
-            border-radius: 50px;
+            font-size: 13px;
             font-weight: 600;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
             text-decoration: none;
-            display: inline-block;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .btn-vendre:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.6);
+            background: #1e293b;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        
-        a { text-decoration: none; }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* Optimisation Mobile tactile */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 20px;
+            }
+            th, td {
+                padding: 12px 14px;
+            }
+            tbody tr:active td {
+                border-color: #000000 !important;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="glass-panel">
+    <div class="dashboard-container">
         <h1>Gestion des Stocks</h1>
         
-        <table>
-            <thead>
-                <tr>
-                    <th>Article</th>
-                    <th>Prix unitaire</th>
-                    <th>En Stock</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for article in articles %}
-                <tr>
-                    <td style="font-weight: 600;">{{ article.nom }}</td>
-                    <td>{{ article.prix }} $</td>
-                    <td>
-                        <span style="background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 20px; font-size: 0.9em;">
-                            {{ article.quantite_en_stock }}
-                        </span>
-                    </td>
-                    <td>
-                        <a href="{% url 'vendre_article' article.id %}">
-                            <button class="btn-vendre">Enregistrer Vente</button>
-                        </a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Article</th>
+                        <th>Prix unitaire</th>
+                        <th>En Stock</th>
+                        <th style="text-align: right;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for article in articles %}
+                    <tr>
+                        <td class="article-name">{{ article.nom }}</td>
+                        <td class="price-tag">{{ article.prix }} $</td>
+                        <td>
+                            <span class="stock-badge">{{ article.quantite_en_stock }} en stock</span>
+                        </td>
+                        <td style="text-align: right;">
+                            <a href="{% url 'vendre_article' article.id %}">
+                                <button class="btn-vendre">Enregistrer Vente</button>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </body>
