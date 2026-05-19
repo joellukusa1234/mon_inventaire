@@ -3,141 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reçu | NexGen 2026</title>
+    <title>Reçu | Arielle Boutique</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
-
-        /* Style pour l'écran (Glassmorphism) */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            color: #ffffff;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        :root {
+            --bg-screen: #f1f5f9;
+            --wallet-bg: #ffffff;
+            --text-dark: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --primary-accent: #dc2626; /* Rouge Professionnel */
+            --secondary-accent: #eab308; /* Jaune Or Boutique */
+            --border: #f1f5f9;
         }
 
-        .receipt-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-            border-radius: 16px;
-            padding: 40px;
-            width: 350px;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-screen);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        /* Conteneur style Portefeuille haut de gamme */
+        .wallet-card {
+            background: var(--wallet-bg);
+            width: 100%;
+            max-width: 480px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.1);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            padding: 32px;
             position: relative;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 15px;
+        /* Décoration de découpe style ticket de caisse en bas du reçu interne */
+        .receipt-inner {
+            border-bottom: 2px dashed #e2e8f0;
+            padding-bottom: 28px;
+            margin-bottom: 28px;
         }
 
-        .header h2 { margin: 0; font-weight: 600; letter-spacing: 2px;}
-        
-        .row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            font-size: 1.1em;
-        }
-
-        .label { color: #a1c4fd; font-size: 0.9em; }
-        
-        .total-row {
-            border-top: 1px dashed rgba(255, 255, 255, 0.3);
-            padding-top: 15px;
-            margin-top: 20px;
-            font-weight: 600;
-            font-size: 1.3em;
-        }
-
-        .actions {
-            margin-top: 30px;
+        /* Header avec logo panier + parfum en rouge et jaune */
+        .brand-header {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            align-items: center;
             text-align: center;
+            margin-bottom: 32px;
         }
 
-        .btn-print {
-            background: #ffffff;
-            color: #0f2027;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
+        .brand-logo {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 12px;
+        }
+
+        .brand-name {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-dark);
+            text-transform: uppercase;
+        }
+
+        .receipt-title {
+            font-size: 12px;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Lignes de données */
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid #f8fafc;
+        }
+
+        .info-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-size: 15px;
+            color: var(--text-dark);
+            font-weight: 600;
+            text-align: right;
+        }
+
+        /* Section Total Payé */
+        .total-highlight-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fffbeb; /* Fond chaud très subtil */
+            border: 1px solid #fef3c7;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .total-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: #b45309;
+        }
+
+        .total-amount {
+            font-size: 22px;
+            font-weight: 700;
+            color: #b45309;
+        }
+
+        /* Actions alignées à droite en bas du portefeuille */
+        .wallet-actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 12px;
             width: 100%;
         }
 
-        .btn-print:hover { background: #a1c4fd; }
-
-        .link-back {
-            color: #a1c4fd;
-            text-decoration: none;
-            font-size: 0.9em;
-            transition: color 0.3s;
+        .btn-action-primary {
+            background: var(--text-dark);
+            color: #ffffff;
+            border: none;
+            padding: 12px 22px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
-        .link-back:hover { color: #ffffff; }
 
-        /* Style spécifiquement pour l'imprimante (Noir et Blanc propre) */
+        .btn-action-primary:hover {
+            background: #1e293b;
+            transform: translateY(-1px);
+        }
+
+        .btn-action-secondary {
+            background: #f1f5f9;
+            color: var(--text-secondary);
+            border: none;
+            padding: 12px 22px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .btn-action-secondary:hover {
+            background: #e2e8f0;
+            color: var(--text-dark);
+            transform: translateY(-1px);
+        }
+
+        /* STYLE PROPRE POUR L'IMPRESSION SUR PAPIER */
         @media print {
             body {
-                background: white;
-                color: black;
-                display: block;
-                padding: 20px;
-            }
-            .receipt-card {
-                background: none;
-                backdrop-filter: none;
-                border: none;
-                box-shadow: none;
-                width: 100%;
+                background: #ffffff;
                 padding: 0;
+                display: block;
             }
-            .header { border-bottom: 2px solid black; }
-            .total-row { border-top: 2px dashed black; }
-            .label { color: #555; }
-            .actions { display: none; /* Cache les boutons à l'impression */ }
+            .wallet-card {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                max-width: 100%;
+            }
+            .receipt-inner {
+                border-bottom: none;
+            }
+            .total-highlight-row {
+                background: #ffffff;
+                border: 1px solid #000000;
+                color: #000000;
+            }
+            .total-label, .total-amount {
+                color: #000000;
+            }
+            .wallet-actions {
+                display: none !important; /* Cache les boutons à l'impression */
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="receipt-card">
-        <div class="header">
-            <h2>REÇU OFFICIEL</h2>
-        </div>
-        
-        <div class="row">
-            <span class="label">Date :</span>
-            <span>{{ vente.date_vente|date:"d/m/Y H:i" }}</span>
-        </div>
-        
-        <div class="row">
-            <span class="label">Article :</span>
-            <span>{{ vente.article.nom }}</span>
-        </div>
-        
-        <div class="row total-row">
-            <span>Total Payé</span>
-            <span>{{ vente.total }} $</span>
-        </div>
-    </div>
+    <div class="wallet-card">
+        <div class="receipt-inner">
+            
+            <div class="brand-header">
+                <svg class="brand-logo" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 24H52L46 52H18L12 24Z" fill="#dc2626" fill-opacity="0.1" stroke="#dc2626" stroke-width="3" stroke-linejoin="round"/>
+                    <path d="M22 24V52M32 24V52M42 24V52" stroke="#dc2626" stroke-width="2"/>
+                    <rect x="20" y="10" width="10" height="14" rx="2" fill="#eab308"/>
+                    <rect x="23" y="6" width="4" height="4" fill="#dc2626"/>
+                    <path d="M36 8H44V24H36V8Z" fill="#dc2626"/>
+                    <circle cx="40" cy="14" r="2" fill="#eab308"/>
+                    <path d="M16 24C16 14 23.1634 8 32 8C40.8366 8 48 14 48 24" stroke="#eab308" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+                
+                <div class="brand-name">Arielle Boutique</div>
+                <div class="receipt-title">Reçu Officiel</div>
+            </div>
 
-    <div class="actions">
-        <button class="btn-print" onclick="window.print()">🖨 Imprimer le reçu</button>
-        <a href="{% url 'liste_articles' %}" class="link-back">← Retour à l'inventaire</a>
+            <div class="info-row">
+                <span class="info-label">Date & Heure</span>
+                <span class="info-value">{{ vente.date_vente|date:"d/m/Y H:i" }}</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">Article acheté</span>
+                <span class="info-value">{{ vente.article.nom }}</span>
+            </div>
+
+            <div class="total-highlight-row">
+                <span class="total-label">Total Payé</span>
+                <span class="total-amount">{{ vente.total }} $</span>
+            </div>
+
+        </div>
+
+        <div class="wallet-actions">
+            <a href="{% url 'liste_articles' %}" class="btn-action-secondary">Inventaire</a>
+            <button class="btn-action-primary" onclick="window.print()">Imprimer le reçu</button>
+        </div>
     </div>
 
 </body>
